@@ -4,12 +4,15 @@
 
 # AgroFácil - Gerenciamento de Fazendas e Animais
 
+> **Nota**: Eu sou responsável apenas pelo **frontend** deste projeto.
+
 ## 📖 Sobre
-A AgroFácil é uma aplicação voltada para o gerenciamento de fazendas e animais no setor do agronegócio, desenvolvida como um projeto de teste de desenvolvimento para a Ponta Agro. Com foco na simplicidade e acessibilidade, a AgroFácil foi criada para atender usuários com pouca experiência em tecnologia, oferecendo uma interface intuitiva e fácil de usar.
+A AgroFácil é uma aplicação frontend voltada para o gerenciamento de fazendas e animais no setor do agronegócio, desenvolvida como um projeto de teste de desenvolvimento para a Ponta Agro. Com foco na simplicidade e acessibilidade, a AgroFácil foi criada para atender usuários com pouca experiência em tecnologia, oferecendo uma interface intuitiva e fácil de usar.
+O backend é implementado separadamente e não faz parte deste repositório.
 
 ## 🛠️ Tecnologias
 - **Frontend**: Angular (v16.2.x), Angular Material (v16.2.14), Tailwind CSS (v3.3.3), TypeScript (v5.1.3)
-- **Backend**: Java 11
+- **Backend**: Java 11 (não incluído neste repositório)
 
 ## 💻 Pré-requisitos
 Antes de começar, você precisará de:
