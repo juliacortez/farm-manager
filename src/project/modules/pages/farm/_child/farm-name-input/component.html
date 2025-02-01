@@ -1,0 +1,10 @@
+<mat-form-field class="w-full" [formGroup]="farmForm">
+  <mat-label class="text-sm">Nome da fazenda</mat-label>
+  <input type="name" matInput formControlName="name" [errorStateMatcher]="matcher" class="text-gray-900 text-sm placeholder:text-sm" />
+  <ng-container *ngIf="farmForm.get('name')?.hasError('required')">
+    <mat-error class="!text-xs">O nome é obrigatório</mat-error>
+  </ng-container>
+  <ng-container *ngIf="farmForm.get('name')?.hasError('minlength')">
+    <mat-error class="!text-xs">O nome deve ter no mínimo 4 letras</mat-error>
+  </ng-container>
+</mat-form-field>

@@ -1,0 +1,62 @@
+<main class="bg-gray-50 h-full">
+  <div class="mx-auto max-w-7xl px-4 py-10 md:py-12 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-6 lg:col-span-2">
+      <!-- Welcome panel -->
+      <section>
+        <div class="flex flex-col gap-y-2">
+          <h3 class="text-xl md:text-2xl font-semibold text-green-700">Bem vindo ao AgroFácil!</h3>
+          <h4 class="text-sm text-gray-700">Use o menu abaixo para administrar <span class="font-medium">Fazendas e Animais</span>.</h4>
+        </div>
+      </section>
+      <!-- Actions panel -->
+      <section class="mt-6">
+        <div class="divide-x divide-y divide-gray-200 overflow-hidden rounded-lg bg-gray-200 shadow sm:grid sm:grid-cols-2 sm:gap-px sm:divide-y-0">
+          <div class="group relative rounded-tl-lg rounded-tr-lg bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-cyan-500 sm:rounded-tr-none">
+            <span class="inline-flex rounded-lg bg-green-50 p-3 ring-4 ring-white">
+              <div>
+                <img class="w-8 h-8" src="assets/images/farm-icon.png" alt="Ícone Fazenda" />
+              </div>
+            </span>
+            <div class="mt-8">
+              <h3 class="sm:text-lg font-medium">
+                <a [routerLink]="['/fazenda']" class="text-green-700 focus:outline-none decoration-transparent">
+                  <span class="absolute inset-0" aria-hidden="true"></span>
+                  Fazendas
+                </a>
+              </h3>
+              <p class="mt-2 text-sm text-gray-700">Você pode criar, ver, editar ou excluir suas fazendas clicando aqui.</p>
+            </div>
+            <span class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400" aria-hidden="true">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
+              </svg>
+            </span>
+          </div>
+          <div class="group relative bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-cyan-500 sm:rounded-tr-lg">
+            <div>
+              <span class="inline-flex rounded-lg bg-green-50 p-3 ring-4 ring-white">
+                <div>
+                  <img class="w-8 h-8" src="assets/images/animal-icon.png" alt="Ícone Animal" />
+                </div>
+              </span>
+            </div>
+            <div class="mt-8">
+              <h3 class="sm:text-lg font-medium">
+                <a [routerLink]="['/animal']" class="text-green-700 focus:outline-none decoration-transparent">
+                  <span class="absolute inset-0" aria-hidden="true"></span>
+                  Animais
+                </a>
+              </h3>
+              <p class="mt-2 text-sm text-gray-700">Você pode criar, ver, editar ou excluir seus animais clicando aqui.</p>
+            </div>
+            <span class="pointer-events-none absolute right-6 top-6 text-gray-300 group-hover:text-gray-400" aria-hidden="true">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M20 4h1a1 1 0 00-1-1v1zm-1 12a1 1 0 102 0h-2zM8 3a1 1 0 000 2V3zM3.293 19.293a1 1 0 101.414 1.414l-1.414-1.414zM19 4v12h2V4h-2zm1-1H8v2h12V3zm-.707.293l-16 16 1.414 1.414 16-16-1.414-1.414z" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>

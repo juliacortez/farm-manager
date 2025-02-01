@@ -1,0 +1,33 @@
+# Environtment
+src/environments/environment.ts
+
+# Node.js
+/node_modules
+npm-debug.log*
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Angular build outputs
+dist/
+out-tsc/
+coverage/
+
+# IDEs e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Diretórios do Angular
+.angular/
+
+# Logs e caches
+*.log
+*.tmp
+.npm/
+.pnp.*

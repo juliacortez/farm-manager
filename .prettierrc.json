@@ -1,0 +1,12 @@
+{
+    "printWidth": 360,
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "requirePragma": false,
+    "insertPragma": false,
+    "braceStyle": "psr-2",
+    "trailingComma": "es5",
+    "max-line-length": [true, { "limit": 360 }]
+  }
+  

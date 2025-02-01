@@ -1,0 +1,117 @@
+<!-- Loading component -->
+<app-loading [isLoading]="requestProcess"></app-loading>
+<ng-container *ngIf="farms.length > 0 || animal?.farmId !== null && animal?.farmId !== undefined">
+  <ng-container *ngIf="!animal">
+    <fieldset class="mb-6 grid grid-cols-2 gap-x-4">
+      <label value="normal" aria-label="normal" class="group flex cursor-pointer border border-gray-200 p-4 rounded-md focus:outline-none has-[:checked]:relative has-[:checked]:border-green-200 has-[:checked]:bg-green-50">
+        <input
+          name="create-type"
+          value="normal"
+          type="radio"
+          (change)="onChangeCreateType('normal')"
+          [checked]="createType == 'normal'"
+          class="relative size-4 shrink-0 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-green-600 checked:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
+        />
+        <span class="ml-3 flex flex-col">
+          <span class="block text-s sm:text-sm text-gray-900 group-has-[:checked]:text-green-900">Cadastrar apenas um animal</span>
+        </span>
+      </label>
+
+      <label value="list" aria-label="list" class="group flex cursor-pointer border border-gray-200 p-4 rounded-md focus:outline-none has-[:checked]:relative has-[:checked]:border-green-200 has-[:checked]:bg-green-50">
+        <input
+          name="create-type"
+          value="list"
+          type="radio"
+          (change)="onChangeCreateType('list')"
+          [checked]="createType == 'list'"
+          class="relative size-4 shrink-0 appearance-none rounded-full border border-gray-300 bg-white before:absolute before:inset-1 before:rounded-full before:bg-white checked:border-green-600 checked:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:before:bg-gray-400 forced-colors:appearance-auto forced-colors:before:hidden [&:not(:checked)]:before:hidden"
+        />
+        <span class="ml-3 flex flex-col">
+          <span class="block text-s sm:text-sm text-gray-900 group-has-[:checked]:text-green-900">Cadastrar vários animais</span>
+        </span>
+      </label>
+    </fieldset>
+  </ng-container>
+  <form [formGroup]="animalForm">
+    <!-- FarmId input -->
+    <mat-form-field class="w-full">
+      <mat-label class="text-sm">Número de cadastro da Fazenda</mat-label>
+      <input type="text" matInput formControlName="farmId" [matAutocomplete]="auto" />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let farm of filteredFarms | async" [value]="farm.id">{{farm.id }} - {{ farm.name }} </mat-option>
+      </mat-autocomplete>
+      <ng-container *ngIf="animalForm.get('farmId')?.hasError('required')">
+        <mat-error class="!text-xs">É obrigatória a escolha de uma fazenda</mat-error>
+      </ng-container>
+    </mat-form-field>
+    <ng-container *ngIf="createType == 'list'"><div class="py-2 border-t border-gray-300"></div></ng-container>
+    <ng-container *ngIf="createType == 'normal'">
+      <!-- Name input -->
+      <mat-form-field class="w-full">
+        <mat-label class="text-sm">Nome do animal</mat-label>
+        <input type="name" matInput formControlName="name" [errorStateMatcher]="matcher" class="text-gray-900 text-sm placeholder:text-sm" />
+        <ng-container *ngIf="animalForm.get('name')?.hasError('required')">
+          <mat-error class="!text-xs">O nome é obrigatório</mat-error>
+        </ng-container>
+        <ng-container *ngIf="animalForm.get('name')?.hasError('minlength')">
+          <mat-error class="!text-xs">O nome deve ter no mínimo 4 letras</mat-error>
+        </ng-container>
+      </mat-form-field>
+      <!-- Tag input -->
+      <mat-form-field class="w-full">
+        <mat-label class="text-sm">Tag de Identificação</mat-label>
+        <input type="name" matInput formControlName="tag" [errorStateMatcher]="matcher" class="text-gray-900 text-sm placeholder:text-sm" />
+        <ng-container *ngIf="animalForm.get('tag')?.hasError('required')">
+          <mat-error class="!text-xs">A tag é obrigatória</mat-error>
+        </ng-container>
+        <ng-container *ngIf="animalForm.get('tag')?.hasError('minlength')">
+          <mat-error class="!text-xs">A tag deve ter no mínimo 3 números</mat-error>
+        </ng-container>
+        <ng-container *ngIf="animalForm.get('tag')?.hasError('pattern')">
+          <mat-error class="!text-xs">A tag é formada apenas por números</mat-error>
+        </ng-container>
+      </mat-form-field>
+    </ng-container>
+    <ng-container *ngIf="createType == 'list'">
+      <div formArrayName="animals" *ngFor="let animal of animals.controls let i = index">
+        <ng-container [formGroupName]="i">
+          <!-- Name input -->
+          <mat-form-field class="w-full">
+            <mat-label class="text-sm">Nome do animal</mat-label>
+            <input type="name" matInput formControlName="name" [errorStateMatcher]="matcher" class="text-gray-900 text-sm placeholder:text-sm" />
+            <ng-container *ngIf="animal.get('name')?.hasError('required')">
+              <mat-error class="!text-xs">O nome é obrigatório</mat-error>
+            </ng-container>
+            <ng-container *ngIf="animal.get('name')?.hasError('minlength')">
+              <mat-error class="!text-xs">O nome deve ter no mínimo 4 letras</mat-error>
+            </ng-container>
+          </mat-form-field>
+          <!-- Tag input -->
+          <mat-form-field class="w-full">
+            <mat-label class="text-sm">Tag de Identificação</mat-label>
+            <input type="name" matInput formControlName="tag" [errorStateMatcher]="matcher" class="text-gray-900 text-sm placeholder:text-sm" />
+            <ng-container *ngIf="animal.get('tag')?.hasError('required')">
+              <mat-error class="!text-xs">A tag de identificação é obrigatória</mat-error>
+            </ng-container>
+            <ng-container *ngIf="animal.get('tag')?.hasError('minlength')">
+              <mat-error class="!text-xs">A tag deve ter no mínimo 3 números</mat-error>
+            </ng-container>
+            <ng-container *ngIf="animal.get('tag')?.hasError('pattern')">
+              <mat-error class="!text-xs">A tag deve ser numérica</mat-error>
+            </ng-container>
+          </mat-form-field>
+        </ng-container>
+        <div class="py-2 border-t border-gray-300"></div>
+      </div>
+      <div class="flex justify-center">
+        <button (click)="onAddNewAnimalInput()" type="button" class="flex items-center gap-x-2 rounded-md bg-blue-600 px-2 py-3 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">Adicionar mais um animal</button>
+      </div>
+    </ng-container>
+  </form>
+</ng-container>
+<ng-container *ngIf="farms.length == 0 && animal?.farmId == null">
+  <div class="h-full flex items-center justify-center flex-col text-center gap-y-6">
+    <p>Você precisa cadastrar uma fazenda, antes de cadastrar um animal</p>
+    <a [routerLink]="['/fazenda']" type="button" class="px-4 py-2 sm:py-3 text-sm sm:text-normal bg-green-600 text-white rounded-md hover:bg-green-700">Ir para fazendas</a>
+  </div>
+</ng-container>

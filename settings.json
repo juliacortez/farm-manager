@@ -1,0 +1,16 @@
+{
+  "customizeUI.listRowHeight": 20, // shrink rows to match XCode
+
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.quickSuggestions": { "comments": true },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "files.associations": { "*.scss": "postcss" },
+  "search.exclude": {
+    "**/node_modules/**": true
+  },
+
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

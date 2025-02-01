@@ -1,0 +1,120 @@
+<!-- Loading component -->
+<app-loading [isLoading]="requestProcess"></app-loading>
+
+<ng-container *ngIf="farm?.id">
+  <main class="bg-gray-50 h-full">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 overflow-x-auto">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-x-4 gap-y-2 flex-wrap">
+          <li>
+            <div>
+              <a [routerLink]="['/']" class="text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700">Início</a>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="h-4 w-4 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+              <a [routerLink]="['/fazenda']" class="ml-4 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700">Fazendas</a>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="h-4 w-4 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+              <a [routerLink]="['/fazenda/' + farm.id]" class="ml-4 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700">{{exibitionName}}</a>
+            </div>
+          </li>
+        </ol>
+      </nav>
+
+      <section class="mt-12">
+        <div class="-ml-4 -mt-2 flex flex-wrap items-center justify-between gap-y-2">
+          <div class="ml-4">
+            <h3 class="text-lg sm:text-2xl font-semibold text-gray-900">{{exibitionName}}</h3>
+            <span class="pb-1 text-xs text-gray-500 font-normal">Número de cadastro: {{farm.id}}</span>
+          </div>
+          <div class="ml-4 shrink-0">
+            <button type="button" (click)="farmServiceDelete()" class="px-4 py-3 bg-red-600 text-white rounded-md flex items-center gap-x-3 w-full justify-center hover:bg-red-700 text-s sm:text-sm"><i class="fas fa-trash"></i> Excluir</button>
+          </div>
+        </div>
+
+        <mat-tab-group class="mt-6 !bg-white p-2 sm:p-4">
+          <mat-tab label="Ver Detalhes">
+            <div class="mt-6">
+              <farm-name-input [farm]="farm" (formInvalid)="onFormInvalidChanged($event)" (farmData)="onUpdateInputValue($event)"></farm-name-input>
+            </div>
+            <div class="bg-gray-100 px-4 py-3 text-right sm:px-6 w-full mt-6">
+              <button (click)="farmServiceUpdate()" [disabled]="isFormInvalid" type="button" class="inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-4 py-3 text-s sm:text-sm text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:opacity-40">
+                <i class="fas fa-check"></i>
+                Salvar
+              </button>
+            </div>
+          </mat-tab>
+          <mat-tab label="Ver Animais">
+            <ng-container *ngIf="farm.animals.length == 0">
+              <div class="relative flex flex-col items-center justify-center gap-y-4 py-6 px-4 sm:py-14">
+                <div class="shrink-0">
+                  <span class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10 text-gray-300">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                  </span>
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div class="flex flex-col gap-y-3 text-center text-sm sm:text-lg font-medium text-gray-900">
+                    Nenhum animal cadastrado nessa fazenda
+                    <a [routerLink]="['/animal']" [queryParams]="{ openDrawer: true }" type="button" class="px-4 py-2 sm:py-3 text-sm sm:text-normal bg-green-600 text-white rounded-md hover:bg-green-700">Cadastrar animais</a>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="farm.animals.length > 0">
+              <!-- View data mobile -->
+              <div class="mt-6 grid sm:grid-cols-4 gap-6 sm:hidden">
+                <div *ngFor="let animal of farm.animals" class="divide-y divide-gray-200 overflow-hidden bg-white border rounded-md border-gray-200 hover:shadow-md">
+                  <div class="px-4 py-5 sm:p-6 font-medium text-lg text-gray-800 flex flex-col gap-y-0.5">
+                    {{ animal.name }}
+                    <span class="text-gray-600 text-s inline-flex items-center rounded-md font-normal"> Tag de Identificação: {{animal.tag}} </span>
+                  </div>
+                  <div class="px-4 py-4 sm:px-6 flex flex-col items-center gap-y-2">
+                    <button type="button" [routerLink]="['/animal/'+animal.id]" class="px-4 py-3 bg-blue-600 text-white rounded-md flex items-center gap-x-4 w-full justify-center hover:bg-blue-700 text-sm"><i class="fas fa-eye"></i> Ver detalhes</button>
+                  </div>
+                </div>
+              </div>
+              <!-- View data desktop -->
+              <div class="mt-6 hidden sm:block">
+                <div class="bg-white rounded-md border border-gray-200">
+                  <div class="-mx-4 sm:mx-0 sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                      <thead>
+                        <tr class="divide-x divide-gray-200">
+                          <th scope="col" class="py-3.5 px-3 text-center text-normal font-semibold text-gray-900">Nome do Animal</th>
+                          <th scope="col" class="py-3.5 px-3 text-center text-normal font-semibold text-gray-900">Tag de Identificação</th>
+                          <th scope="col" class="px-3 py-3.5"></th>
+                        </tr>
+                      </thead>
+                      <tbody class="bg-white min-w-full">
+                        <tr *ngFor="let animal of farm.animals" class="even:bg-gray-100 divide-x divide-gray-200">
+                          <td class="whitespace-pre-line py-4 px-3 text-center text-normal font-medium text-gray-900">{{animal.name}}</td>
+                          <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-700 text-center">{{animal.tag}}</td>
+                          <td class="py-3.5 p-4 overflow-hidden">
+                            <div class="flex gap-x-1.5">
+                              <button [routerLink]="['/animal/'+animal.id]" class="px-4 py-3 w-full text-normal bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center justify-center gap-x-2"><i class="fas fa-eye"></i> Ver detalhes</button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </mat-tab>
+        </mat-tab-group>
+      </section>
+    </div>
+  </main>
+</ng-container>

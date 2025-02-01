@@ -1,0 +1,80 @@
+/* You can add global styles to this file, and also import other style files */
+/* @tailwind base; */
+/* @import "tailwindcss/preflight"; */
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  box-sizing: border-box;
+  border: 0 solid;
+}
+
+*,
+::after,
+::before,
+::backdrop,
+::file-selector-button {
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+ol,
+ul,
+menu {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%; /* Opcional: Faz a tabela ocupar a largura total */
+}
+
+th {
+  padding: 0;
+  border: 0; /* Remove bordas padrão */
+  text-align: left; /* Remove alinhamento central padrão em alguns navegadores */
+}
+
+button {
+  cursor: pointer;
+}
+
+.green-snackbar {
+  background-color: #4caf50 !important;
+  color: white !important;
+}
+
+.red-snackbar {
+  background-color: #f44336 !important;
+  color: white !important;
+}

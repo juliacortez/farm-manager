@@ -1,0 +1,111 @@
+<!-- Loading component -->
+<app-loading [isLoading]="requestProcess"></app-loading>
+
+<ng-container *ngIf="animals">
+  <main class="bg-gray-50 h-full">
+    <div class="mx-auto max-w-7xl px-4 py-6 sm:py-8 sm:px-6 lg:px-8 overflow-x-auto">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-x-4">
+          <li>
+            <div>
+              <a [routerLink]="['/']" class="text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700">Início</a>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="h-4 w-4 shrink-0 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
+              <a [routerLink]="['/animal']" class="ml-4 text-xs sm:text-sm font-medium text-gray-500 hover:text-gray-700">Animais</a>
+            </div>
+          </li>
+        </ol>
+      </nav>
+
+      <section class="mt-12">
+        <div class="-mt-2 flex flex-wrap items-center justify-between gap-y-2 sm:flex-nowrap">
+          <div>
+            <h3 class="text-xl sm:text-2xl font-semibold text-gray-900">Animais</h3>
+          </div>
+          <div class="flex items-center justify-between sm:justify-normal gap-x-2">
+            <ng-container *ngIf="animals.length > 0">
+              <button (click)="createAndDownloadXLSReport()" type="button" class="px-4 py-2 sm:py-3 text-sm sm:text-normal bg-blue-600 text-white rounded-md hover:bg-blue-700">Baixar Relatório</button>
+            </ng-container>
+            <animal-create (animalServiceWasStored)="animalServiceWasStored($event)"></animal-create>
+          </div>
+        </div>
+
+        <!-- No data found -->
+        <div *ngIf="animals?.length === 0" class="text-center mt-6 py-6 sm:py-10 bg-white">
+          <div class="relative flex flex-col items-center justify-center gap-y-4 py-4">
+            <div class="shrink-0">
+              <span class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-10 w-10 text-gray-300">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+              </span>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="text-center text-sm sm:text-lg font-medium text-gray-900">
+                <span class="absolute inset-0" aria-hidden="true"></span>
+                Nenhum animal encontrado
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- View data mobile -->
+        <div class="mt-6 grid sm:grid-cols-4 gap-6 sm:hidden">
+          <div *ngFor="let animal of animals" class="divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow hover:shadow-md">
+            <div class="px-4 py-5 sm:p-6 font-medium text-lg text-gray-800 flex flex-col gap-y-0.5">
+              <p>{{ animal.name }}</p>
+              <span class="pt-1 text-xs text-gray-500 font-normal">Número de cadastro: {{animal.id}}</span>
+
+              <span class="text-gray-600 text-s inline-flex items-center rounded-md font-normal"> Tag de Identificação: {{animal.tag}} </span>
+              <span class="-mt-2 text-gray-600 text-s inline-flex items-center rounded-md font-normal"> Código da Fazenda: {{animal.farmId}} </span>
+            </div>
+            <div class="px-4 py-4 sm:px-6 flex flex-col items-center gap-y-2">
+              <button type="button" [routerLink]="['/animal/'+animal.id]" class="px-4 py-3 bg-blue-600 text-white rounded-md flex items-center gap-x-4 w-full justify-center hover:bg-blue-700 text-sm"><i class="fas fa-eye"></i> Ver detalhes</button>
+              <button type="button" (click)="animalServiceDelete(animal)" class="px-4 py-3 bg-red-600 text-white rounded-md flex items-center gap-x-4 w-full justify-center hover:bg-red-700 text-sm"><i class="fas fa-trash"></i> Excluir animal</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- View data desktop -->
+        <ng-container *ngIf="animals?.length > 0">
+          <div class="mt-6 hidden sm:block">
+            <div class="bg-white rounded-md">
+              <div class="-mx-4 sm:mx-0 sm:rounded-lg">
+                <table class="min-w-full divide-y divide-gray-200">
+                  <thead>
+                    <tr class="divide-x divide-gray-200">
+                      <th scope="col" class="py-3.5 px-1 text-center text-normal font-semibold text-gray-900">Número de cadastro</th>
+                      <th scope="col" class="py-3.5 px-3 text-center text-normal font-semibold text-gray-900">Nome do Animal</th>
+                      <th scope="col" class="py-3.5 px-3 text-center text-normal font-semibold text-gray-900">Tag de Identificação</th>
+                      <th scope="col" class="px-3 py-3.5 text-center text-normal font-semibold text-gray-900">Código da Fazenda</th>
+                      <th scope="col" class="px-3 py-3.5"></th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-white min-w-full">
+                    <tr *ngFor="let animal of animals" class="even:bg-gray-100 divide-x divide-gray-200">
+                      <td class="whitespace-nowrap py-4 px-1 text-sm text-gray-500 text-center">{{animal.id}}</td>
+                      <td class="whitespace-pre-line py-4 px-3 text-center text-normal font-medium text-gray-900">{{animal.name}}</td>
+                      <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-700 text-center">{{animal.tag}}</td>
+                      <td class="px-3 py-3.5 lg:table-cell text-center"><a class="underline text-gray-700 text-normal hover:text-green-700" [routerLink]="['/fazenda/'+animal.farmId]"> {{animal.farmId}}</a></td>
+                      <td class="py-3.5 p-4 overflow-hidden">
+                        <div class="flex gap-x-1.5">
+                          <button [routerLink]="['/animal/'+animal.id]" class="px-4 py-3 w-full text-normal bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center justify-center gap-x-2"><i class="fas fa-eye"></i> Ver detalhes</button>
+                          <button type="button" (click)="animalServiceDelete(animal)" class="px-4 py-3 w-full text-normal bg-red-600 text-white rounded-md hover:bg-red-700 flex items-center justify-center gap-x-2"><i class="fas fa-trash"></i> Excluir animal</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </section>
+    </div>
+  </main>
+</ng-container>

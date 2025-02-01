@@ -1,0 +1,41 @@
+<button (click)="onToggleDrawer()" type="button" class="px-4 py-2 sm:py-3 text-sm sm:text-normal bg-green-600 text-white rounded-md hover:bg-green-700">Cadastrar uma fazenda</button>
+<mat-drawer-container>
+  <mat-drawer #drawer class="!bg-white w-full sm:max-w-[600px] !fixed" mode="over" opened="false" position="end">
+    <div class="h-full">
+      <form (ngSubmit)="farmServiceCreate()" class="flex h-full flex-col divide-y divide-gray-200 bg-white shadow-xl">
+        <div class="flex min-h-0 flex-1 flex-col overflow-y-scroll py-6">
+          <div class="px-4 sm:px-6">
+            <div class="flex items-start justify-between">
+              <h2 class="text-base font-semibold text-gray-900 sm:text-xl" id="slide-over-title">Cadastrar nova fazenda</h2>
+              <div class="ml-3 flex h-7 items-center">
+                <button (click)="onToggleDrawer()" type="button" class="relative items-center rounded-md bg-white text-gray-600 hover:text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                  <span class="absolute -inset-2.5"></span>
+                  <span class="sr-only">Fechar</span>
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="relative mt-6 flex-1 px-4 sm:px-6">
+            <farm-name-input (formInvalid)="onFormInvalidChanged($event)" (modifiedForm)="onCheckIfFormWasModified($event)" [drawerIsOpen]="drawer.opened" (farmData)="onUpdateInputValue($event)"></farm-name-input>
+          </div>
+        </div>
+
+        <div class="flex shrink-0 justify-end gap-x-3 px-4 py-4">
+          <button (click)="onToggleDrawer()" type="button" class="inline-flex items-center gap-x-1.5 rounded-md bg-gray-200 px-4 py-3 text-s sm:text-sm text-gray-700 shadow-sm hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600">
+            <i class="fas fa-times"></i>
+            Cancelar
+          </button>
+          <button [disabled]="isFormInvalid" type="submit" class="inline-flex items-center gap-x-1.5 rounded-md bg-green-600 px-4 py-3 text-s sm:text-sm text-white shadow-sm hover:bg-green-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600 disabled:opacity-40">
+            <i class="fas fa-check"></i>
+            Criar
+          </button>
+        </div>
+      </form>
+    </div>
+  </mat-drawer>
+
+  <div *ngIf="drawer.opened" class="backdrop fixed" (click)="onToggleDrawer()"></div>
+</mat-drawer-container>
