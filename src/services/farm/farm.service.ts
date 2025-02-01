@@ -1,17 +1,18 @@
-import { environment } from 'src/environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ErrorService } from '../error.service';
 
 @Injectable()
 export class FarmService {
+  api_url: string = 'http://localhost:5051/api/';
+
   constructor(
     public http: HttpClient,
     public error: ErrorService
   ) {}
 
   index() {
-    let request = this.http.get(environment.api_url + 'farm/');
+    let request = this.http.get(this.api_url + 'farm/');
     return request;
   }
 
@@ -21,7 +22,7 @@ export class FarmService {
    */
 
   view(data: any) {
-    let request = this.http.get(environment.api_url + 'farm/' + data);
+    let request = this.http.get(this.api_url + 'farm/' + data);
     return request;
   }
 
@@ -30,7 +31,7 @@ export class FarmService {
    * @param data
    */
   store(data: any) {
-    let request = this.http.post(environment.api_url + 'farm/', data);
+    let request = this.http.post(this.api_url + 'farm/', data);
     return request;
   }
 
@@ -40,7 +41,7 @@ export class FarmService {
    */
 
   update(data: any) {
-    let request = this.http.put(environment.api_url + 'farm/' + data.id, data);
+    let request = this.http.put(this.api_url + 'farm/' + data.id, data);
     return request;
   }
 
@@ -50,7 +51,7 @@ export class FarmService {
    */
 
   delete(data: number) {
-    let request = this.http.delete(environment.api_url + 'farm/' + data);
+    let request = this.http.delete(this.api_url + 'farm/' + data);
     return request;
   }
 }
