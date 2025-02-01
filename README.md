@@ -27,8 +27,8 @@ Além disto ter um editor para trabalhar com o código, para o desenvolvimento d
 ```bash
 # A aplicação é desenvolvida em java 11 e necessita que o java esteja instalado no seu ambiente.
 
-# Baixe e extraia a aplicação de backend:
-$ <a href="https://drive.google.com/file/d/1KTgnbB1Wu5XdVIvlujUejCvFHbbvU6hd/view" target="_blank">Ponta.jar.zip</a>
+# Acesse, baixe e extraia a aplicação de backend:
+$ <https://drive.google.com/file/d/1KTgnbB1Wu5XdVIvlujUejCvFHbbvU6hd/view>
 
 # Execute a aplicação através do comando no terminal
 $ java -jar ponta.jar
