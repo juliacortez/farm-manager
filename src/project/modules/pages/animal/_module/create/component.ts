@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 // [Services]
 import { AnimalService } from 'src/services/animal/animal.service';
 import { SnackbarService } from 'src/shared/snackbar/component';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'animal-create',
@@ -28,6 +28,7 @@ export class AnimalCreateComponent implements OnInit, AfterViewInit {
   createType: string = '';
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     // [Angular Material]
     private dialog: MatDialog,
@@ -55,6 +56,7 @@ export class AnimalCreateComponent implements OnInit, AfterViewInit {
         _.subscribe(
           (response: any) => {
             this.snackbarService.showSuccess('Animal cadastrado com sucesso', 4000);
+            this.drawer.close();
             this.animalServiceWasStored.emit({ createType: this.createType, data: response });
           },
           (err) => {

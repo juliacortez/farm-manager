@@ -52,10 +52,19 @@ export class AnimalComponent implements OnInit {
   }
 
   animalServiceWasStored(event: any) {
-    if (event.createType == 'normal') {
-      this.router.navigate(['/animal/' + event.data.id]);
+    if (event.createType == 'normal' && event.data?.id) {
+      // Navigate to animal view page and clean url params
+      this.router.navigate(['/animal/' + event.data.id], {
+        queryParams: {},
+      });
     } else {
       this.animalServiceIndex();
+      // Clean url params
+      this.router.navigate([], {
+        queryParams: {},
+        queryParamsHandling: 'merge',
+        replaceUrl: true,
+      });
     }
   }
 
